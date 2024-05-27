@@ -24,15 +24,6 @@ public class ResourceManager : MonoBehaviour {
 
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
-            AddResource(resourceTypeList.list[0], 2);
-        }
-    }
-
     private void TestLogResourceAmountDictionary()
     {
         foreach (ResourceTypeSO resourceType in resourceAmountDictionary.Keys)
@@ -41,20 +32,17 @@ public class ResourceManager : MonoBehaviour {
         }
     }
 
-    public void AddResource(ResourceTypeSO resourceType, int amount)
-    {
+    public void AddResource(ResourceTypeSO resourceType, int amount) {
         resourceAmountDictionary[resourceType] += amount;
 
         OnResourceAmountChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public int GetResourceAmount(ResourceTypeSO resourceType)
-    {
+    public int GetResourceAmount(ResourceTypeSO resourceType) {
         return resourceAmountDictionary[resourceType];
     }
 
-    public bool CanAfford(ResourceAmount[] resourceAmountArray)
-    {
+    public bool CanAfford(ResourceAmount[] resourceAmountArray) {
         foreach (ResourceAmount resourceAmount in resourceAmountArray)
         {
             if (GetResourceAmount(resourceAmount.ResourceType) >= resourceAmount.amount)
