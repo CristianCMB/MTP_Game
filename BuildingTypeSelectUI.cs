@@ -30,9 +30,20 @@ public class BuildingTypeSelectUI : MonoBehaviour
             
         arrowBtn.Find("image").GetComponent<Image>().sprite=arrowSprite ;
         arrowBtn.Find("image").GetComponent<RectTransform>().sizeDelta = new Vector2(0, -30);
+
         arrowBtn.GetComponent<Button>().onClick.AddListener(() => {
             BuildingManager.Instance.SetActiveBuildingType(null);
         });
+
+        MouseEnterExitEvents mouseEnterExitEvents= arrowBtn.GetComponent<MouseEnterExitEvents>();
+
+        mouseEnterExitEvents.OnMouseEnter += (object sender, EventArgs e) => {
+            TooltipUI.Instance.Show("Arrow");
+        };
+
+        mouseEnterExitEvents.OnMouseExit += (object sender, EventArgs e) => {
+            TooltipUI.Instance.Hide();
+        };
 
         index++;
         
@@ -50,6 +61,16 @@ public class BuildingTypeSelectUI : MonoBehaviour
             btnTransform.GetComponent<Button>().onClick.AddListener(() => {
                 BuildingManager.Instance.SetActiveBuildingType(buildingType);
             });
+
+            mouseEnterExitEvents= btnTransform.GetComponent<MouseEnterExitEvents>();
+
+            mouseEnterExitEvents.OnMouseEnter += (object sender, EventArgs e) => {
+            TooltipUI.Instance.Show(buildingType.nameString + "\n" + buildingType.GetConstructionResourceCostString());
+            };
+
+            mouseEnterExitEvents.OnMouseExit += (object sender, EventArgs e) => {
+                TooltipUI.Instance.Hide();
+            };
 
             btnTransformDictionary[buildingType] = btnTransform;
             
