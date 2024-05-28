@@ -25,7 +25,7 @@ public class ResourceManager : MonoBehaviour {
         }
 
         foreach (ResourceAmount resourceAmount in startingResourceAmountList) {
-    AddResource(resourceAmount.ResourceType, resourceAmount.amount);
+    AddResource(resourceAmount.resourceType, resourceAmount.amount);
         }
     }
 
@@ -47,7 +47,7 @@ public class ResourceManager : MonoBehaviour {
 
     public bool CanAfford(ResourceAmount[] resourceAmountArray) {
         foreach (ResourceAmount resourceAmount in resourceAmountArray) {
-            if (GetResourceAmount(resourceAmount.ResourceType) >= resourceAmount.amount) {
+            if (GetResourceAmount(resourceAmount.resourceType) >= resourceAmount.amount) {
                 //can aford
             }
             else {
@@ -62,7 +62,7 @@ public class ResourceManager : MonoBehaviour {
 
     public void SpendResources(ResourceAmount[] resourceAmountArray) {
         foreach (ResourceAmount resourceAmount in resourceAmountArray) {
-            resourceAmountDictionary[resourceAmount.ResourceType] -= resourceAmount.amount;
+            resourceAmountDictionary[resourceAmount.resourceType] -= resourceAmount.amount;
         }
     }
 }

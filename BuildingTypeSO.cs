@@ -13,11 +13,12 @@ public class BuildingTypeSO : ScriptableObject
     public float minConstructionRadius;
     public ResourceAmount[] constructionResourceCostArray;
     public int healthAmountMax;
+    public float constructionTimerMax;
 
     public string GetConstructionResourceCostString() {
         string str = "";
         foreach (ResourceAmount resourceAmount in constructionResourceCostArray) {
-            str += "<color=#" +resourceAmount.ResourceType.colorHex + ">" + resourceAmount.ResourceType.nameShort + resourceAmount.amount+"</color> ";
+            str += "<color=#" +resourceAmount.resourceType.colorHex + ">" + resourceAmount.resourceType.nameShort + resourceAmount.amount+"</color> ";
         }
         return str;
     }
