@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ResourceManager : MonoBehaviour {
@@ -8,26 +9,28 @@ public class ResourceManager : MonoBehaviour {
 
     public event EventHandler OnResourceAmountChanged;
 
+    [SerializeField]
+    private List<ResourceAmount> startingResourceAmountList;
+
     private Dictionary<ResourceTypeSO, int> resourceAmountDictionary;
 
-    private void Awake()
-    {
+    private void Awake() {
         Instance = this;
         resourceAmountDictionary = new Dictionary<ResourceTypeSO, int>();
 
         ResourceTypeListSO resourceTypeList = Resources.Load<ResourceTypeListSO>(typeof(ResourceTypeListSO).Name);
 
-        foreach (ResourceTypeSO resourceType in resourceTypeList.list)
-        {
+        foreach (ResourceTypeSO resourceType in resourceTypeList.list) {
             resourceAmountDictionary[resourceType] = 0;
         }
 
+        foreach (ResourceAmount resourceAmount in startingResourceAmountList) {
+    AddResource(resourceAmount.ResourceType, resourceAmount.amount);
+        }
     }
 
-    private void TestLogResourceAmountDictionary()
-    {
-        foreach (ResourceTypeSO resourceType in resourceAmountDictionary.Keys)
-        {
+    private void TestLogResourceAmountDictionary() {
+        foreach (ResourceTypeSO resourceType in resourceAmountDictionary.Keys) {
             Debug.Log(resourceType.nameString + ": " + resourceAmountDictionary[resourceType]);
         }
     }
@@ -43,14 +46,11 @@ public class ResourceManager : MonoBehaviour {
     }
 
     public bool CanAfford(ResourceAmount[] resourceAmountArray) {
-        foreach (ResourceAmount resourceAmount in resourceAmountArray)
-        {
-            if (GetResourceAmount(resourceAmount.ResourceType) >= resourceAmount.amount)
-            {
+        foreach (ResourceAmount resourceAmount in resourceAmountArray) {
+            if (GetResourceAmount(resourceAmount.ResourceType) >= resourceAmount.amount) {
                 //can aford
             }
-            else
-            {
+            else {
                 //can't afford building
                 return false;
             }
@@ -65,6 +65,4 @@ public class ResourceManager : MonoBehaviour {
             resourceAmountDictionary[resourceAmount.ResourceType] -= resourceAmount.amount;
         }
     }
-    
-    
 }
