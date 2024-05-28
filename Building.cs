@@ -18,9 +18,6 @@ public class Building : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) {
-            healthSystem.Damage(10);
-        }
     }
 
     private void HealthSystem_Ondied(object sender, System.EventArgs e) {
