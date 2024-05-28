@@ -30,10 +30,11 @@ public class BuildingManager : MonoBehaviour{
     private void Start(){
         mainCamera=Camera.main;
 
-        hqBuilding.GetComponent<HealthSystem>().OnDied += BuildManager_OnDied;
+        hqBuilding.GetComponent<HealthSystem>().OnDied += HQ_OnDied;
     }
 
-    private void BuildManager_OnDied(Object sender, EventArgs e) {
+    private void HQ_OnDied(Object sender, EventArgs e) {
+        SoundManager.Instance.PlaySound(SoundManager.Sound.GameOver);
     GameOverUI.Instance.Show();
     }
     private void Update() {
