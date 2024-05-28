@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Object = System.Object;
 
 public class BuildingManager : MonoBehaviour{ 
     
@@ -28,6 +29,12 @@ public class BuildingManager : MonoBehaviour{
     
     private void Start(){
         mainCamera=Camera.main;
+
+        hqBuilding.GetComponent<HealthSystem>().OnDied += BuildManager_OnDied;
+    }
+
+    private void BuildManager_OnDied(Object sender, EventArgs e) {
+    GameOverUI.Instance.Show();
     }
     private void Update() {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
@@ -37,6 +44,7 @@ public class BuildingManager : MonoBehaviour{
                         ResourceManager.Instance.SpendResources(activeBuildingType.constructionResourceCostArray);
                         //Instantiate(activeBuildingType.prefab, UtilsClass.GetMouseWorldPosition(), Quaternion.identity);
                         BuildingConstruction.Create(UtilsClass.GetMouseWorldPosition(),activeBuildingType);
+                        SoundManager.Instance.PlaySound(SoundManager.Sound.BuildingPlaced);
                     }else{
                         TooltipUI.Instance.Show("Cannot afford "+ activeBuildingType.GetConstructionResourceCostString(), new TooltipUI.TooltipTimer() {timer =2f});
                     }
